@@ -3,7 +3,8 @@ Responsibility: Определение иерархии кастомных ис�
 """
 from __future__ import annotations
 from typing import Optional
-
+import logging
+logger = logging.getLogger(__name__)
 class DomainError(Exception):
     """Базовое исключение для всех ошибок домена."""
     def __init__(self, message: str, details: Optional[str] = None) -> None:
