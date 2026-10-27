@@ -1,0 +1,15 @@
+/* presentation/theme/main.qss */
+QWidget#MainWindow {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+QPushButton#HeaderBtn {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 6px 12px;
+}
+QPushButton#HeaderBtn:hover {
+    background-color: #45475a;
+}

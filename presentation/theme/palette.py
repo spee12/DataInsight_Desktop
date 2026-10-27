@@ -1,0 +1,10 @@
+class Palette:
+    BG_PRIMARY = "#1e1e2e"
+    BG_SECONDARY = "#2a2b3d"
+    BG_ACCENT = "#313244"
+    TEXT_PRIMARY = "#cdd6f4"
+    TEXT_SECONDARY = "#a6adc8"
+    ACCENT_BLUE = "#89b4fa"
+    ACCENT_GREEN = "#a6e3a1"
+    ACCENT_RED = "#f38ba8"
+    BORDER = "#45475a"
