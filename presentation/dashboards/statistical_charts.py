@@ -58,11 +58,12 @@ class BoxPlotWidget(BaseChartWidget):
         self._fig = Figure(facecolor=_MPL_STYLE["figure.facecolor"], tight_layout=True)
         self._ax = self._fig.add_subplot(111); _apply_dark_style(self._ax)
         arrays = [d[1] for d in cols_data]; labels = [self._truncate_label(d[0], 12) for d in cols_data]
-        bp = self._ax.boxplot(arrays, labels=labels, patch_artist=True, vert=True, widths=0.5, showfliers=True, flierprops=dict(marker="o", markersize=3, markerfacecolor="#e94560", markeredgecolor="#e94560", alpha=0.1, linestyle="none"), medianprops=dict(color="#ffffff", linewidth=2), whiskerprops=dict(color=_ACCENT, linewidth=1.2, linestyle="--"), capprops=dict(color=_ACCENT, linewidth=1.5))
-        for p, c in zip(bp["boxes"], _PALETTE): p.set_facecolor(c); p.set_alpha(0.1); p.set_edgecolor("#ffffff")
-        for i, (_, a) in enumerate(cols_data):
-            if len(a) <= 100: self._ax.scatter([i + 1 + j for j in np.random.uniform(-0.15, 0.15, size=len(a))], a, alpha=0.95, s=8, color=_PALETTE[i % len(_PALETTE)], zorder=5)
-        self._ax.set_ylabel("Значение", color=_MPL_STYLE["axes.labelcolor"], fontsize=9)
+
+
+        bp = self._ax.boxplot(arrays, patch_artist=True, vert=True, widths=0.5, showfliers=True, flierprops=dict(marker="o", markersize=3, markerfacecolor="#e94560", markeredgecolor="#e94560", alpha=0.1, linestyle="none"), medianprops=dict(color="#ffffff", linewidth=2), whiskerprops=dict(color=_ACCENT, linewidth=1.2, linestyle="--"), capprops=dict(color=_ACCENT, linewidth=1.5))
+        self._ax.set_xticklabels(labels)
+
+
         self._ax.tick_params(axis="x", labelsize=8, rotation=20 if len(labels) > 4 else 0, colors=_MPL_STYLE["xtick.color"])
         self._ax.tick_params(axis="y", labelsize=8, colors=_MPL_STYLE["ytick.color"])
         self._canvas = FigureCanvasQTAgg(self._fig); self._chart_layout.addWidget(self._canvas)

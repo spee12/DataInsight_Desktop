@@ -60,13 +60,25 @@ class ScatterChartWidget(BaseChartWidget):
 
     def _add_trend_line(self, c, x_vals, y_vals, x_min, x_max):
         try:
-            coeffs = np.polyfit(np.array(x_vals), np.array(y_vals), 1); trend = np.poly1d(coeffs)
+            x_arr = np.array(x_vals, dtype=float)
+            y_arr = np.array(y_vals, dtype=float)
+            # Убираем NaN/Inf
+            mask = np.isfinite(x_arr) & np.isfinite(y_arr)
+            x_arr, y_arr = x_arr[mask], y_arr[mask]
+            # Проверка: минимум 3 точки и ненулевой разброс по X
+            if len(x_arr) < 3 or np.std(x_arr) == 0 or np.std(y_arr) == 0:
+                return
+            coeffs = np.polyfit(x_arr, y_arr, 1)
+            trend = np.poly1d(coeffs)
             from PySide6.QtCharts import QLineSeries
-            lt = QLineSeries(); lt.setName(f"Тренд (y={coeffs[0]:.2f}x + {coeffs[1]:.2f})")
+            lt = QLineSeries();
+            lt.setName(f"Тренд (y={coeffs[0]:.2f}x + {coeffs[1]:.2f})")
             lt.setPen(QPen(QColor("#f39c12"), 2, Qt.PenStyle.DashLine))
             for xv in np.linspace(x_min, x_max, 100): lt.append(float(xv), float(trend(xv)))
             c.addSeries(lt)
-        except Exception as e: logger.warning(f"ScatterChartWidget._add_trend_line: {e}")
+        except Exception as e:
+            logger.warning(f"ScatterChartWidget._add_trend_line: {e}")
+
 
     def _show_no_data(self):
         self._chart_layout.addWidget(QLabel("Нет данных для построения Scatter Plot\n(нужны: минимум две числовые колонки)", alignment=Qt.AlignmentFlag.AlignCenter, objectName="noDataLabel"))
@@ -79,13 +91,24 @@ class HeatmapWidget(BaseChartWidget):
         y_cols = chart.y_columns or [c for c in chart.data[0].keys() if len(self._extract_numeric_column(chart.data, c)) >= 5]
         y_cols = y_cols[:self.MAX_COLS]
         if len(y_cols) < 2: self._show_no_data("Для тепловой карты нужно минимум 2 числовые колонки"); return
+
         arrays, valid_cols = [], []
         for c in y_cols:
             vals = self._extract_numeric_column(chart.data, c)
-            if len(vals) >= 5: arrays.append(np.array(vals)); valid_cols.append(c)
+            if len(vals) >= 5:
+                arr = np.array(vals, dtype=float)
+                # Пропускаем константные колонки (std == 0) — они ломают корреляцию
+                if np.std(arr) > 0 and np.isfinite(arr).all():
+                    arrays.append(arr);
+                    valid_cols.append(c)
         if len(valid_cols) < 2: self._show_no_data(); return
         min_len = min(len(a) for a in arrays)
-        matrix = np.corrcoef([a[:min_len] for a in arrays])
+        with np.errstate(invalid="ignore", divide="ignore"):
+            matrix = np.corrcoef([a[:min_len] for a in arrays])
+        # Заменяем NaN (если всё же появились) на 0
+        matrix = np.nan_to_num(matrix, nan=0.0, posinf=0.0, neginf=0.0)
+
+
         n = len(valid_cols); fs = max(5, n * 0.85)
         fig = Figure(figsize=(fs, fs), facecolor=_MPL_STYLE["figure.facecolor"], tight_layout=True)
         ax = fig.add_subplot(111); _apply_dark_style(ax)
