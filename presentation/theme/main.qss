@@ -1,15 +1,143 @@
-/* presentation/theme/main.qss */
-QWidget#MainWindow {
+
+#MainWindow {
     background-color: #1e1e2e;
-    color: #cdd6f4;
 }
-QPushButton#HeaderBtn {
+
+/* ---------- Шапка ---------- */
+#AppHeader {
+    background-color: #2a2b3d;
+    color: #cdd6f4;
+    padding: 20px 16px;
+    min-height: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #45475a;
+}
+
+#HeaderLabel {
+    color: #cdd6f4;
+    background-color: transparent;
+    font-size: 13px;
+    font-family: "DejaVu Sans";
+    font-weight: 500;
+}
+
+/* ---------- Кнопки шапки ---------- */
+#HeaderBtn {
+    min-width: 120px;
+    min-height: 36px;
+    padding: 8px 20px;
     background-color: #313244;
     color: #cdd6f4;
     border: 1px solid #45475a;
     border-radius: 6px;
-    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 500;
 }
-QPushButton#HeaderBtn:hover {
+
+#HeaderBtn:hover {
+    color: #89b4fa;
+    border-color: #89b4fa;
+}
+
+#HeaderBtn:pressed {
+    background-color: #1e1e2e;
+}
+
+/* ---------- Главная кнопка (загрузка) ---------- */
+#PrimaryButton {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 16px 48px;
+    border: none;
+    border-radius: 14px;
+    min-width: 280px;
+}
+
+#PrimaryButton:hover {
+    background-color: #a6e3a1;
+}
+
+#PrimaryButton:pressed {
+    background-color: #313244;
+    color: #cdd6f4;
+    padding-top: 17px;
+}
+
+/* ---------- Подписи ---------- */
+#HintLabel {
+    color: #a6adc8;
+    font-size: 13px;
+    margin-top: 16px;
+    background-color: transparent;
+}
+
+#StatusLabel {
+    color: #cdd6f4;
+    font-size: 15px;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+/* ---------- Прогресс-бар ---------- */
+#ProgressBar {
+    border: 1px solid #45475a;
+    border-radius: 4px;
+    background-color: #313244;
+    height: 8px;
+    width: 400px;
+}
+
+#ProgressBar::chunk {
+    background-color: #89b4fa;
+    border-radius: 3px;
+}
+
+/* ---------- Кнопка отмены ---------- */
+#CancelButton {
+    background-color: #313244;
+    color: #cdd6f4;
+    padding: 10px 20px;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+}
+
+#CancelButton:hover {
     background-color: #45475a;
+}
+
+#CancelButton:pressed {
+    background-color: #1e1e2e;
+}
+
+/* ---------- Общие виджеты (вне #ExportPanel) ---------- */
+QComboBox {
+    background-color: #313244;
+    color: #cdd6f4;
+    padding: 4px 8px;
+    border: 1px solid #45475a;
+    border-radius: 4px;
+}
+
+QComboBox:hover,
+QComboBox:focus {
+    border-color: #89b4fa;
+}
+
+QComboBox QAbstractItemView {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    selection-background-color: #313244;
+    selection-color: #89b4fa;
+    border: 1px solid #45475a;
+    outline: none;
+}
+
+QCheckBox {
+    color: #cdd6f4;
+    spacing: 8px;
+    padding: 2px 0;
+    background-color: transparent;
 }

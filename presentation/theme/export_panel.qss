@@ -1,0 +1,133 @@
+
+#ExportPanel,
+#ExportPanel #ScrollContent,
+#ExportPanel QScrollArea,
+#ExportPanel QScrollArea > QWidget > QWidget {
+    background-color: #313244;
+    border: none;
+}
+
+#ExportPanel {
+    border: 1px solid #45475a;
+    border-radius: 12px;
+    min-width: 400px;
+    max-width: 450px;
+}
+
+/* ---------- Заголовок панели ---------- */
+#ExportPanel #PanelTitle {
+    color: #cdd6f4;
+    font-size: 16px;
+    font-weight: bold;
+    padding-bottom: 12px;
+    background-color: transparent;
+}
+
+/* ---------- Текстовые метки ---------- */
+#ExportPanel QLabel {
+    color: #cdd6f4;
+    background-color: transparent;
+}
+
+/* ---------- Чекбоксы ---------- */
+#ExportPanel QCheckBox {
+    color: #cdd6f4;
+    background-color: transparent;
+    spacing: 8px;
+}
+
+#ExportPanel QCheckBox::indicator {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #89b4fa;
+    border-radius: 4px;
+    background-color: #1e1e2e;
+}
+
+#ExportPanel QCheckBox::indicator:hover {
+    border-color: #a6e3a1;
+}
+
+#ExportPanel QCheckBox::indicator:checked {
+    background-color: #89b4fa;
+    border-color: #89b4fa;
+}
+
+/* ---------- Комбобоксы ---------- */
+#ExportPanel QComboBox {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    border: 2px solid #89b4fa;
+    border-radius: 6px;
+    padding: 4px 10px;
+    min-width: 120px;
+}
+
+#ExportPanel QComboBox:hover,
+#ExportPanel QComboBox:focus {
+    border-color: #a6e3a1;
+}
+
+#ExportPanel QComboBox QAbstractItemView {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    selection-background-color: #45475a;
+    selection-color: #89b4fa;
+    border: 1px solid #45475a;
+    outline: none;
+}
+
+/* ---------- Кнопки ---------- */
+#ExportPanel QPushButton {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 8px 15px;
+    font-weight: 500;
+}
+
+#ExportPanel QPushButton:hover {
+    color: #89b4fa;
+    border-color: #89b4fa;
+}
+
+#ExportPanel QPushButton:pressed {
+    background-color: #2a2b3d;
+}
+
+#ExportPanel QPushButton:disabled {
+    color: #a6adc8;
+    border-color: #313244;
+    background-color: #2a2b3d;
+}
+
+/* ---------- Скроллбар ---------- */
+#ExportPanel QScrollBar:vertical {
+    background: #1e1e2e;
+    width: 10px;
+    border: none;
+    margin: 0;
+}
+
+#ExportPanel QScrollBar::handle:vertical {
+    background: #45475a;
+    border-radius: 5px;
+    min-height: 20px;
+}
+
+#ExportPanel QScrollBar::handle:vertical:hover {
+    background: #89b4fa;
+}
+
+#ExportPanel QScrollBar::add-line:vertical,
+#ExportPanel QScrollBar::sub-line:vertical {
+    height: 0;
+    background: none;
+    border: none;
+}
+
+#ExportPanel QScrollBar::add-page:vertical,
+#ExportPanel QScrollBar::sub-page:vertical {
+    background: none;
+}
