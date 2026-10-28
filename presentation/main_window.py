@@ -105,7 +105,7 @@ class MainWindow(QMainWindow):
         self.export_panel.resize(420, 480)
         self.export_panel.setHidden(True)
         self.export_panel.export_requested.connect(self._start_export)
-        self.export_panel.cancelled.connect(self.export_panel.setHidden)
+        self.export_panel.cancelled.connect(lambda: self.export_panel.setHidden(True))
         self.export_panel.preview_requested.connect(self._show_chart_preview)
         self.welcome.file_selected.connect(self._handle_file_trigger)
 

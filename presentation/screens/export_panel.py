@@ -37,7 +37,7 @@ class ExportPanel(QWidget):
         bl = QHBoxLayout()
         bl.addWidget(QPushButton("Предпросмотр", clicked=self._handle_preview))
         bl.addStretch()
-        bl.addWidget(QPushButton("Отмена", clicked=self.cancelled.emit))
+        bl.addWidget(QPushButton("Отмена", clicked=lambda: self.cancelled.emit()))
         bl.addWidget(QPushButton("Экспортировать", clicked=self._handle_export))
         l.addLayout(bl)
         logger.debug("ExportPanel._setup_ui: UI initialized")
