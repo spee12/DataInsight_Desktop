@@ -29,28 +29,49 @@
     background-color: transparent;
 }
 
-/* ---------- Чекбоксы ---------- */
-#ExportPanel QCheckBox {
-    color: #cdd6f4;
+/* ---------- Чекбоксы и Радиокнопки ---------- */
+#ExportPanel QCheckBox,
+#ExportPanel QRadioButton {
+    color: #ffffff;          /* Белый цвет текста */
+    font-size: 15px;         /* Увеличенный шрифт (было ~13) */
     background-color: transparent;
-    spacing: 8px;
+    spacing: 10px;           /* Расстояние между кружком и текстом */
+    padding: 4px 0px;        /* Вертикальные отступы (хитбокс и текст) */
 }
 
-#ExportPanel QCheckBox::indicator {
-    width: 18px;
-    height: 18px;
+/* Стили для индикаторов (кружков/квадратиков) */
+#ExportPanel QCheckBox::indicator,
+#ExportPanel QRadioButton::indicator {
+    width: 20px;             /* Увеличенный размер (было 18) */
+    height: 20px;
     border: 2px solid #89b4fa;
-    border-radius: 4px;
     background-color: #1e1e2e;
 }
 
-#ExportPanel QCheckBox::indicator:hover {
+/* Квадратные для чекбокса, круглые для радиокнопки */
+#ExportPanel QCheckBox::indicator {
+    border-radius: 4px;
+}
+#ExportPanel QRadioButton::indicator {
+    border-radius: 11px;
+}
+
+/* Эффект при наведении */
+#ExportPanel QCheckBox::indicator:hover,
+#ExportPanel QRadioButton::indicator:hover {
     border-color: #a6e3a1;
 }
 
+/* Состояние "выбрано" */
 #ExportPanel QCheckBox::indicator:checked {
     background-color: #89b4fa;
     border-color: #89b4fa;
+}
+
+#ExportPanel QRadioButton::indicator:checked {
+    /* Заливаем фон и делаем толстую рамку, чтобы внутри остался темный кружок (эффект точки) */
+    background-color: #1e1e2e;
+    border: 6px solid #89b4fa;
 }
 
 /* ---------- Комбобоксы ---------- */

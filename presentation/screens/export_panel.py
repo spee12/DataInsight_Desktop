@@ -1,5 +1,5 @@
 import os, logging
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QCheckBox, QComboBox, QPushButton, QHBoxLayout, QScrollArea
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QCheckBox, QRadioButton, QComboBox, QPushButton, QHBoxLayout, QScrollArea
 from PySide6.QtCore import Qt, Signal
 
 logger = logging.getLogger(__name__)
@@ -26,14 +26,17 @@ class ExportPanel(QWidget):
         self.sl.setContentsMargins(0, 0, 0, 0)
         self.scroll.setWidget(sc)
         l.addWidget(self.scroll)
+
         self.table_cb = QCheckBox("Таблица статистики")
+        self.table_cb.stateChanged.connect(self._update_formats)
         l.addWidget(self.table_cb)
         fl = QHBoxLayout()
         fl.addWidget(QLabel("Формат:"))
         self.fmt_combo = QComboBox()
-        self.fmt_combo.addItems(["PNG (графики)", "DOCX", "PDF", "HTML"])
+        self.fmt_combo.addItems(["PNG (графики)", "DOCX"])
         fl.addWidget(self.fmt_combo)
         l.addLayout(fl)
+
         bl = QHBoxLayout()
         bl.addWidget(QPushButton("Предпросмотр", clicked=self._handle_preview))
         bl.addStretch()
@@ -46,17 +49,23 @@ class ExportPanel(QWidget):
         self.chart_titles = [c.title for c in charts]
         for cb in self.checkboxes: cb.deleteLater()
         self.checkboxes.clear()
+
         for i, t in enumerate(self.chart_titles):
-            cb = QCheckBox(f"{i + 1}. {t}")
+            cb = QRadioButton(f"{i + 1}. {t}")
             cb.setProperty("chart_index", i)
             self.checkboxes.append(cb)
             self.sl.addWidget(cb)
+
         self.sl.addStretch(1)
         logger.debug(f"ExportPanel.set_charts: Loaded {len(charts)} charts")
 
     def _handle_export(self):
         idx = [cb.property("chart_index") for cb in self.checkboxes if cb.isChecked()]
         self.export_requested.emit(idx, self.table_cb.isChecked(), self.fmt_combo.currentText().split(" ")[0])
+
+    def _update_formats(self):
+        self.fmt_combo.clear()
+        self.fmt_combo.addItems(["DOCX"] if self.table_cb.isChecked() else ["PNG (графики)", "DOCX"])
 
     def _handle_preview(self):
         idx = [cb.property("chart_index") for cb in self.checkboxes if cb.isChecked()]
