@@ -1,7 +1,7 @@
 from __future__ import annotations
 import logging
 from typing import Any
-from PySide6.QtWidgets import QGraphicsTextItem
+from PySide6.QtWidgets import QGraphicsTextItem, QSlider
 from PySide6.QtCore import Qt, QDateTime
 from PySide6.QtCharts import QChart, QChartView, QLineSeries, QValueAxis, QCategoryAxis, QAreaSeries, QDateTimeAxis
 from PySide6.QtGui import QColor, QPainter, QBrush, QLinearGradient, QGradient, QPen
@@ -54,7 +54,7 @@ class _ZoomChartView(QChartView):
 
 class _TemporalBase(BaseChartWidget):
     def __init__(self, chart: Chart, parent=None):
-        self._series_list, self._axis_x, self._axis_y, self._qt_chart, self._chart_view, self._full_labels = [], None, None, None, None, []
+        self._series_list, self._axis_x, self._axis_y, self._qt_chart, self._chart_view, self._full_labels, self._slider, self._x_home, self._sync = [], None, None, None, None, [], None, None, False
         super().__init__(chart, parent)
 
     def _new_chart(self, title: str):
@@ -78,6 +78,7 @@ class _TemporalBase(BaseChartWidget):
         else:
             self._axis_x = _style_axis(QCategoryAxis())
             self._full_labels = [_format_axis_label(v) for v in raw_xs]
+            self._axis_x.setRange(0, len(self._full_labels) - 1)
         self._qt_chart.addAxis(self._axis_x, Qt.AlignmentFlag.AlignBottom)
         if not vals: self._refresh_x_labels(0, len(self._full_labels) - 1)
         return vals
@@ -96,7 +97,39 @@ class _TemporalBase(BaseChartWidget):
     def _finish(self, numeric: bool):
         self._chart_view = _ZoomChartView(self._qt_chart)
         self._chart_layout.addWidget(self._chart_view)
+        self._slider = QSlider(Qt.Orientation.Horizontal, minimum=0, maximum=1000, pageStep=50)
+        self._slider.valueChanged.connect(self._on_slide)
+        self._chart_layout.addWidget(self._slider)
+        self._x_home = self._x_lo_hi()
+        self._axis_x.rangeChanged.connect(self._sync_slider)
         if not numeric: self._axis_x.rangeChanged.connect(self._refresh_x_labels)
+        self._sync_slider(*self._x_home)
+
+    def _x_lo_hi(self):
+        ax = self._axis_x
+        return (ax.min().toMSecsSinceEpoch(), ax.max().toMSecsSinceEpoch()) if isinstance(ax, QDateTimeAxis) else (ax.min(), ax.max())
+
+    def _set_x_lo_hi(self, lo, hi):
+        if isinstance(self._axis_x, QDateTimeAxis): self._axis_x.setRange(QDateTime.fromMSecsSinceEpoch(int(lo)), QDateTime.fromMSecsSinceEpoch(int(hi)))
+        else: self._axis_x.setRange(lo, hi)
+
+    def _sync_slider(self, lo, hi):
+        if self._sync: return
+        if isinstance(lo, QDateTime): lo, hi = lo.toMSecsSinceEpoch(), hi.toMSecsSinceEpoch()
+        h0, h1 = self._x_home
+        free = (h1 - h0) - (hi - lo)
+        self._slider.setEnabled(free > 0)
+        if free > 0:
+            self._slider.blockSignals(True); self._slider.setValue(int((lo - h0) / free * 1000)); self._slider.blockSignals(False)
+
+    def _on_slide(self, v):
+        if self._sync: return
+        self._sync = True
+        lo, hi = self._x_lo_hi()
+        h0, h1 = self._x_home
+        nlo = h0 + v / 1000 * ((h1 - h0) - (hi - lo))
+        self._set_x_lo_hi(nlo, nlo + (hi - lo))
+        self._sync = False
 
     def _refresh_x_labels(self, lo, hi):
         if not self._full_labels: return
