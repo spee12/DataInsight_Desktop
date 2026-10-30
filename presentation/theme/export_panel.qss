@@ -14,7 +14,7 @@
     max-width: 450px;
 }
 
-/* ---------- Заголовок панели ---------- */
+
 #ExportPanel #PanelTitle {
     color: #cdd6f4;
     font-size: 16px;
@@ -23,32 +23,31 @@
     background-color: transparent;
 }
 
-/* ---------- Текстовые метки ---------- */
+
 #ExportPanel QLabel {
     color: #cdd6f4;
     background-color: transparent;
 }
 
-/* ---------- Чекбоксы и Радиокнопки ---------- */
+
 #ExportPanel QCheckBox,
 #ExportPanel QRadioButton {
-    color: #ffffff;          /* Белый цвет текста */
-    font-size: 15px;         /* Увеличенный шрифт (было ~13) */
+    color: #ffffff;
+    font-size: 15px;
     background-color: transparent;
-    spacing: 10px;           /* Расстояние между кружком и текстом */
-    padding: 4px 0px;        /* Вертикальные отступы (хитбокс и текст) */
+    spacing: 10px;
+    padding: 4px 0px;
 }
 
-/* Стили для индикаторов (кружков/квадратиков) */
+
 #ExportPanel QCheckBox::indicator,
 #ExportPanel QRadioButton::indicator {
-    width: 20px;             /* Увеличенный размер (было 18) */
+    width: 20px;
     height: 20px;
     border: 2px solid #89b4fa;
     background-color: #1e1e2e;
 }
 
-/* Квадратные для чекбокса, круглые для радиокнопки */
 #ExportPanel QCheckBox::indicator {
     border-radius: 4px;
 }
@@ -56,25 +55,22 @@
     border-radius: 11px;
 }
 
-/* Эффект при наведении */
 #ExportPanel QCheckBox::indicator:hover,
 #ExportPanel QRadioButton::indicator:hover {
     border-color: #a6e3a1;
 }
 
-/* Состояние "выбрано" */
 #ExportPanel QCheckBox::indicator:checked {
     background-color: #89b4fa;
     border-color: #89b4fa;
 }
 
 #ExportPanel QRadioButton::indicator:checked {
-    /* Заливаем фон и делаем толстую рамку, чтобы внутри остался темный кружок (эффект точки) */
+
     background-color: #1e1e2e;
     border: 6px solid #89b4fa;
 }
 
-/* ---------- Комбобоксы ---------- */
 #ExportPanel QComboBox {
     background-color: #1e1e2e;
     color: #cdd6f4;
@@ -98,7 +94,6 @@
     outline: none;
 }
 
-/* ---------- Кнопки ---------- */
 #ExportPanel QPushButton {
     background-color: #1e1e2e;
     color: #cdd6f4;
@@ -123,7 +118,6 @@
     background-color: #2a2b3d;
 }
 
-/* ---------- Скроллбар ---------- */
 #ExportPanel QScrollBar:vertical {
     background: #1e1e2e;
     width: 10px;

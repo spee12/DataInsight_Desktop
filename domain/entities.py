@@ -1,11 +1,11 @@
-"""Сущности предметной области."""
+
 from dataclasses import dataclass, field
 from typing import Any
 import logging
 
 from .value_objects import ColumnType, ChartType
 
-logger = logging.getLogger(__name__)   # ← это единственное, что нужно для логов
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -18,8 +18,7 @@ class DatasetProfile:
     temporal_formats: dict[str, str] = field(default_factory=dict)
 
     def get_column_type(self, column_name: str) -> ColumnType:
-        # было: logger.debug(f"...{sys._getframe()...}...")
-        # стало: имя функции подставится само через %(funcName)s
+
         logger.debug("Ищу тип колонки %r", column_name)
         col_type = self.column_types.get(column_name)
         if col_type is None:

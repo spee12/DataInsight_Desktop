@@ -3,7 +3,6 @@
     background-color: #1e1e2e;
 }
 
-/* ---------- Шапка ---------- */
 #AppHeader {
     background-color: #2a2b3d;
     color: #cdd6f4;
@@ -22,7 +21,6 @@
     font-weight: 500;
 }
 
-/* ---------- Кнопки шапки ---------- */
 #HeaderBtn {
     min-width: 120px;
     min-height: 36px;
@@ -44,7 +42,6 @@
     background-color: #1e1e2e;
 }
 
-/* ---------- Главная кнопка (загрузка) ---------- */
 #PrimaryButton {
     background-color: #89b4fa;
     color: #1e1e2e;
@@ -66,7 +63,6 @@
     padding-top: 17px;
 }
 
-/* ---------- Подписи ---------- */
 #HintLabel {
     color: #a6adc8;
     font-size: 13px;
@@ -81,7 +77,6 @@
     background-color: transparent;
 }
 
-/* ---------- Прогресс-бар ---------- */
 #ProgressBar {
     border: 1px solid #45475a;
     border-radius: 4px;
@@ -95,7 +90,6 @@
     border-radius: 3px;
 }
 
-/* ---------- Кнопка отмены ---------- */
 #CancelButton {
     background-color: #313244;
     color: #cdd6f4;
@@ -112,7 +106,6 @@
     background-color: #1e1e2e;
 }
 
-/* ---------- Общие виджеты (вне #ExportPanel) ---------- */
 QComboBox {
     background-color: #313244;
     color: #cdd6f4;
